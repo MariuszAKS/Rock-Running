@@ -1,3 +1,107 @@
-[gd_scene format=3 uid="uid://dni6mjk5vpj5v"]
+[gd_scene load_steps=7 format=3 uid="uid://dni6mjk5vpj5v"]
+
+[ext_resource type="PackedScene" uid="uid://b80odsexpggrl" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://r1uefiy5iftd" path="res://scripts/game.gd" id="1_yqjtg"]
+[ext_resource type="Script" uid="uid://b3lcjm88kuh8w" path="res://scripts/rock_formation.gd" id="4_lbhrr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
+size = Vector2(660, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iywne"]
+size = Vector2(10, 10)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_yqjtg")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.313726, 0, 0, 1)
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(650, 260)
+
+[node name="Timer" type="Timer" parent="Spawner"]
+one_shot = true
+
+[node name="Spawn Area" type="Area2D" parent="Spawner"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Spawner/Spawn Area"]
+position = Vector2(6, 5)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Rock Formations" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+position = Vector2(100, 160)
+platform_on_leave = 2
+platform_floor_layers = 4294967040
+
+[node name="Start Rock Formation" type="AnimatableBody2D" parent="."]
+position = Vector2(-10, 260)
+collision_layer = 2
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("4_lbhrr")
+
+[node name="ColorRect" type="ColorRect" parent="Start Rock Formation"]
+offset_right = 660.0
+offset_bottom = 100.0
+
+[node name="Collision" type="CollisionShape2D" parent="Start Rock Formation"]
+position = Vector2(330, 5)
+shape = SubResource("RectangleShape2D_lbhrr")
+
+[node name="Obstructions" type="Node2D" parent="Start Rock Formation"]
+
+[node name="Remove Area" type="Area2D" parent="."]
+position = Vector2(-700, 265)
+collision_layer = 0
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="Remove Area"]
+shape = SubResource("RectangleShape2D_iywne")
+
+[node name="Game Over Screen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Background" type="ColorRect" parent="Game Over Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.152941, 0.152941, 0.152941, 0.717647)
+
+[node name="CenterContainer" type="CenterContainer" parent="Game Over Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Game Over Screen/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Score Label" type="Label" parent="Game Over Screen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Your run lasted:"
+horizontal_alignment = 1
+
+[node name="Menu Button" type="Button" parent="Game Over Screen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = " :   Go back to Menu   : "
