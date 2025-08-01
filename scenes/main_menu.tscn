@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2nowwyod8aim"]
+
+[ext_resource type="Script" uid="uid://c6p8rdv2n07ks" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[node name="Main Menu" type="Control" node_paths=PackedStringArray("start_button", "exit_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+start_button = NodePath("CenterContainer/VBoxContainer/Start Button")
+exit_button = NodePath("CenterContainer/VBoxContainer/Exit Button")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.187315, 0.144929, 0.120693, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Start Button" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = " :   Start The Game   : "
+
+[node name="Exit Button" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = " :   Exit   : "

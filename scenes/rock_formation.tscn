@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dj6il6j0tprmv"]
+
+[ext_resource type="Script" uid="uid://b3lcjm88kuh8w" path="res://scripts/rock_formation.gd" id="1_yjy1o"]
+[ext_resource type="Texture2D" uid="uid://chnfgmwn7n023" path="res://art/visual/rock_formation.png" id="2_3swh6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0vhb"]
+resource_local_to_scene = true
+size = Vector2(40, 6)
+
+[node name="Rock Formation" type="AnimatableBody2D"]
+collision_layer = 2
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_yjy1o")
+
+[node name="ColorRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 100.0
+texture = ExtResource("2_3swh6")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(20, 7)
+shape = SubResource("RectangleShape2D_s0vhb")
+one_way_collision = true
+
+[node name="Obstructions" type="Node2D" parent="."]
