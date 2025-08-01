@@ -2,6 +2,11 @@ extends Node2D
 
 @onready var player: Player = get_node("Player")
 
+@onready var music: AudioStreamPlayer2D = get_node("Music")
+@onready var music_button: TextureButton = get_node("Music Button")
+@onready var music_on_texture = preload("res://art/visual/sound_on.png")
+@onready var music_off_texture = preload("res://art/visual/sound_off.png")
+
 @onready var rock_formation_scene: PackedScene = preload("res://scenes/rock_formation.tscn")
 @onready var spawner: Node2D = get_node("Spawner")
 @onready var spawn_timer: Timer = spawner.get_node("Timer")
@@ -14,7 +19,6 @@ extends Node2D
 @onready var score_label: Label = game_over_screen.get_node("CenterContainer/VBoxContainer/Score Label")
 @onready var menu_button: Button = game_over_screen.get_node("CenterContainer/VBoxContainer/Menu Button")
 
-var time_temp = 0.2 #0.8
 var time_elapsed = 0.0
 
 
@@ -27,7 +31,13 @@ func _ready() -> void:
 	menu_button.pressed.connect(go_to_menu)
 	game_over_screen.hide()
 
+	music_button.toggled.connect(on_music_button_toggled)
+
 	spawn_rock_formation()
+
+func _process(_delta):
+	if Input.is_action_just_pressed("mute_toggle"):
+		music_button.button_pressed = not music_button.button_pressed
 
 
 func spawn_rock_formation():
@@ -57,3 +67,10 @@ func on_player_fell(time_in_seconds):
 
 func go_to_menu():
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+
+func on_music_button_toggled(pressed: bool):
+	if pressed:
+		music.stop()
+	else:
+		music.play()
